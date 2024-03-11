@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,7 +57,22 @@ fun SnakeGameScreen(
 
     val context = LocalContext.current
     val foodSoundMp = remember {
-        MediaPlayer.create(context, )
+        MediaPlayer.create(context, R.raw.food)
+    }
+    val gameOverSoundMp = remember {
+        MediaPlayer.create(context, R.raw.gameover)
+    }
+
+    LaunchedEffect(key1 = state.snake.size) {
+        if (state.snake.size != 1) {
+            foodSoundMp?.start()
+        }
+    }
+
+    LaunchedEffect(key1 = state.isGameOver) {
+        if (state.isGameOver) {
+            gameOverSoundMp?.start()
+        }
     }
 
     Box(
